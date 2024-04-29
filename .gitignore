@@ -1,0 +1,9 @@
+Promises.Api/bin/
+Promises.Application/bin/
+Promises.Domain/bin/
+Promises.Persistence/bin/
+.idea/
+Promises.Api/obj/
+Promises.Application/obj/
+Promises.Persistence/obj/
+Promises.Domain/obj/
