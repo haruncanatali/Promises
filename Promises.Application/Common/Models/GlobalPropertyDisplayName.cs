@@ -17,10 +17,6 @@ public static class GlobalPropertyDisplayName
     public static readonly string Birthdate = "Doğum Tarihi";
 
     public static readonly string PersonId = "Kişi ID";
-    public static readonly string PersonName = "Kişi Adı";
-    public static readonly string PersonSurname = "Kişi Soyadı";
-    public static readonly string PersonAge = "Kişi Yaşı";
-    public static readonly string PersonPhoto = "Kişi Fotoğrafı";
 
     public static readonly string EventPhotoId = "Söz Fotoğrafı ID";
     public static readonly string EventAgreementId = "Söz Fotoğrafı Bağlı ID";
@@ -30,11 +26,9 @@ public static class GlobalPropertyDisplayName
     public static readonly string AgreementDescription = "Söz Açıklaması";
     public static readonly string AgreementPriorityLevel = "Söz Önemi";
     public static readonly string AgreementDate = "Söz Tarihi";
-    public static readonly string AgreementCommitmentStatus = "Söz Kim Tarafından Verildi";
     public static readonly string AgreementHasNotification = "Söz İçin Bildirim Gerekiyor Mu?";
     public static readonly string AgreementHasMailNotification = "Söz İçin E-Posta Bildirim Gerekiyor Mu?";
     public static readonly string AgreementNotificationFrequency = "Söz İçin Bildirim Sıklığı";
-    public static readonly string AgreementPersonId = "Söz Kişisi";
-    public static readonly string AgreementUserId = "Söz İçin Kendiniz";
+    public static readonly string AgreementApproved = "Söz Onayı";
 
 }

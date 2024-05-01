@@ -22,6 +22,7 @@ public class User : IdentityUser<long>
     public long CreatedBy { get; set; }
     public long? UpdatedBy { get; set; }
 
+    public List<AgreementUsers> AgreementUsers { get; set; }
     public List<Agreement> Agreements { get; set; }
 
     [IgnoreDataMember]

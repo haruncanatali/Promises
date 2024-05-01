@@ -11,7 +11,7 @@ public interface IApplicationContext
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<Agreement> Agreements { get; set; }
     public DbSet<EventPhoto> EventPhotos { get; set; }
-    public DbSet<Person> Persons { get; set; }
+    public DbSet<AgreementUsers> AgreementUsers { get; set; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Promises.Application.Common.Interfaces;
 using Promises.Application.Common.Managers;
 using Promises.Application.Common.Models;
-using Promises.Application.Persons.Commands.Create;
 using Promises.Domain.Entities;
 using Promises.Domain.Enums;
 

@@ -24,7 +24,7 @@ namespace Promises.Persistence
 
         public DbSet<Agreement> Agreements { get; set; }
         public DbSet<EventPhoto> EventPhotos { get; set; }
-        public DbSet<Person> Persons { get; set; }
+        public DbSet<AgreementUsers> AgreementUsers { get; set; }
 
         #endregion
 
@@ -74,8 +74,7 @@ namespace Promises.Persistence
 
             return base.SaveChangesAsync(cancellationToken);
         }
-
-
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(typeof(ApplicationContext).Assembly);

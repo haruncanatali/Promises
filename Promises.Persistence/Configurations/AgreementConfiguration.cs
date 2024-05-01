@@ -11,11 +11,9 @@ public class AgreementConfiguration : IEntityTypeConfiguration<Agreement>
         builder.Property(c => c.Description).IsRequired();
         builder.Property(c => c.PriorityLevel).IsRequired();
         builder.Property(c => c.Date).IsRequired();
-        builder.Property(c => c.CommitmentStatus).IsRequired();
         builder.Property(c => c.HasNotification).IsRequired();
         builder.Property(c => c.HasMailNotification).IsRequired();
         builder.Property(c => c.NotificationFrequency).IsRequired();
-        builder.Property(c => c.UserId).IsRequired();
-        builder.Property(c => c.PersonId).IsRequired();
+        builder.Property(c => c.Approved).HasDefaultValue(false);
     }
 }

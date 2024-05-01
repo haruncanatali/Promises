@@ -12,13 +12,17 @@ namespace Promises.Api.Controllers;
 public class AgreementsController : BaseController
 {
     [HttpGet]
-    public async Task<ActionResult<BaseResponseModel<GetAgreementsVm>>> List([FromQuery] long? personId, long? userId, DateTime? date)
+    public async Task<ActionResult<BaseResponseModel<GetAgreementsVm>>> List([FromQuery] 
+        long? userId, DateTime? date, 
+        DateTime? startDate, DateTime? endDate, bool? mine)
     {
         return Ok(await Mediator.Send(new GetAgreementsQuery
         {
-            PersonId = personId,
             UserId = userId,
-            Date = date
+            Date = date,
+            StartDate = startDate,
+            EndDate = endDate,
+            Mine = mine
         }));
     }
 

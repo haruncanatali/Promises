@@ -16,10 +16,9 @@ public class UpdateAgreementCommand : IRequest<BaseResponseModel<Unit>>
     public string Description { get; set; }
     public PriorityLevel PriorityLevel { get; set; }
     public DateTime Date { get; set; }
-    public CommitmentStatus CommitmentStatus { get; set; }
     public bool HasNotification { get; set; }
     public bool HasMailNotification { get; set; }
-    public long PersonId { get; set; }
+    public long UserId { get; set; }
     public int NotificationFrequency { get; set; }
     public List<long>? EventPhotosToBeDeleted { get; set; }
     public List<IFormFile>? EventPhotosToBeAdded { get; set; }
@@ -46,11 +45,9 @@ public class UpdateAgreementCommand : IRequest<BaseResponseModel<Unit>>
             agreement.Description = request.Description;
             agreement.PriorityLevel = request.PriorityLevel;
             agreement.Date = request.Date;
-            agreement.CommitmentStatus = request.CommitmentStatus;
             agreement.HasNotification = request.HasNotification;
             agreement.HasMailNotification = request.HasMailNotification;
             agreement.NotificationFrequency = request.NotificationFrequency;
-            agreement.PersonId = request.PersonId;
 
             if (request.EventPhotosToBeDeleted is { Count: > 0 })
             {
@@ -72,6 +69,23 @@ public class UpdateAgreementCommand : IRequest<BaseResponseModel<Unit>>
                         Photo = _fileManager.Upload(c,FileRoot.EventPhotos)
                     });
                 });
+            }
+
+            AgreementUsers? agreementUsers = await _context.AgreementUsers
+                .FirstOrDefaultAsync(c => c.AgreementId == agreement.Id, cancellationToken);
+
+            if (agreementUsers != null)
+            {
+                if (agreementUsers.PromisedUserId != request.UserId)
+                {
+                    agreementUsers.PromisedUserId = request.UserId;
+                    _context.AgreementUsers.Update(agreementUsers);
+                    await _context.SaveChangesAsync(cancellationToken);
+                }
+            }
+            else
+            {
+                throw new BadRequestException("Veritabanı hatası meydana geldi. KOD:SVKB01");
             }
 
             await _context.SaveChangesAsync(cancellationToken);

@@ -13,15 +13,15 @@ public class CreateAgreementCommandValidator : AbstractValidator<CreateAgreement
             .WithName(GlobalPropertyDisplayName.AgreementPriorityLevel);
         RuleFor(c => c.Date).NotNull()
             .WithName(GlobalPropertyDisplayName.AgreementDate);
-        RuleFor(c => c.CommitmentStatus).NotNull()
-            .WithName(GlobalPropertyDisplayName.AgreementCommitmentStatus);
         RuleFor(c => c.HasNotification).NotNull()
             .WithName(GlobalPropertyDisplayName.AgreementHasNotification);
         RuleFor(c => c.HasMailNotification).NotNull()
             .WithName(GlobalPropertyDisplayName.AgreementHasMailNotification);
         RuleFor(c => c.NotificationFrequency).NotNull()
             .WithName(GlobalPropertyDisplayName.AgreementNotificationFrequency);
-        RuleFor(c => c.PersonId).NotNull()
+        RuleFor(c => c.UserId).NotNull()
             .WithName(GlobalPropertyDisplayName.PersonId);
+        RuleFor(c => c.Approved).NotNull()
+            .WithName(GlobalPropertyDisplayName.AgreementApproved);
     }
 }

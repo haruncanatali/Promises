@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Promises.Persistence;
@@ -11,9 +12,11 @@ using Promises.Persistence;
 namespace Promises.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20240501200420_fix_migration_1")]
+    partial class fix_migration_1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -198,7 +201,8 @@ namespace Promises.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AgreementId");
+                    b.HasIndex("AgreementId")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -436,8 +440,8 @@ namespace Promises.Persistence.Migrations
             modelBuilder.Entity("Promises.Domain.Entities.AgreementUsers", b =>
                 {
                     b.HasOne("Promises.Domain.Entities.Agreement", "Agreement")
-                        .WithMany("AgreementUsers")
-                        .HasForeignKey("AgreementId")
+                        .WithOne("AgreementUsers")
+                        .HasForeignKey("Promises.Domain.Entities.AgreementUsers", "AgreementId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -476,7 +480,8 @@ namespace Promises.Persistence.Migrations
 
             modelBuilder.Entity("Promises.Domain.Entities.Agreement", b =>
                 {
-                    b.Navigation("AgreementUsers");
+                    b.Navigation("AgreementUsers")
+                        .IsRequired();
 
                     b.Navigation("EventPhotos");
                 });

@@ -14,12 +14,12 @@ public class CreateAgreementCommand : IRequest<BaseResponseModel<Unit>>
     public string Description { get; set; }
     public PriorityLevel PriorityLevel { get; set; }
     public DateTime Date { get; set; }
-    public CommitmentStatus CommitmentStatus { get; set; }
     public bool HasNotification { get; set; }
     public bool HasMailNotification { get; set; }
-    public long PersonId { get; set; }
     public int NotificationFrequency { get; set; }
+    public bool Approved { get; set; }
     public List<IFormFile>? EventPhotos { get; set; }
+    public long UserId { get; set; }
     
     public class Handler : IRequestHandler<CreateAgreementCommand, BaseResponseModel<Unit>>
     {
@@ -41,12 +41,19 @@ public class CreateAgreementCommand : IRequest<BaseResponseModel<Unit>>
                 Description = request.Description,
                 PriorityLevel = request.PriorityLevel,
                 Date = request.Date,
-                CommitmentStatus = request.CommitmentStatus,
                 HasMailNotification = request.HasMailNotification,
                 HasNotification = request.HasNotification,
                 NotificationFrequency = request.HasNotification ? request.NotificationFrequency : 0,
-                PersonId = request.PersonId,
-                UserId = _currentUserService.UserId
+                Approved = request.Approved
+            }, cancellationToken);
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            await _context.AgreementUsers.AddAsync(new AgreementUsers
+            {
+                PromiserUserId = _currentUserService.UserId,
+                PromisedUserId = request.UserId,
+                AgreementId = result.Entity.Id
             }, cancellationToken);
 
             await _context.SaveChangesAsync(cancellationToken);
