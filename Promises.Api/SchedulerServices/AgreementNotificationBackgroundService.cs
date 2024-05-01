@@ -1,5 +1,4 @@
 using MediatR;
-using Promises.Application.Notifications.Commands.Create;
 using Quartz;
 
 namespace Promises.Api.SchedulerServices;
@@ -22,6 +21,6 @@ public class AgreementNotificationBackgroundService : IJob
     {
         using var scope = _serviceScopeFactory.CreateScope();
         var mediator = scope.ServiceProvider.GetService<IMediator>();
-        await mediator.Send(new CreateNotificationCommand());
+        //await mediator.Send(new CreateNotificationCommand());
     }
 }

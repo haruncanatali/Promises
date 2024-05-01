@@ -16,7 +16,7 @@ public class CreateAgreementCommand : IRequest<BaseResponseModel<Unit>>
     public DateTime Date { get; set; }
     public bool HasNotification { get; set; }
     public bool HasMailNotification { get; set; }
-    public int NotificationFrequency { get; set; }
+    public NotificationFrequency NotificationFrequency { get; set; }
     public bool Approved { get; set; }
     public List<IFormFile>? EventPhotos { get; set; }
     public long UserId { get; set; }

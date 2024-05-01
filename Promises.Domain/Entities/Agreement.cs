@@ -11,7 +11,7 @@ public class Agreement : BaseEntity
     public DateTime Date { get; set; }
     public bool HasNotification { get; set; }
     public bool HasMailNotification { get; set; }
-    public int NotificationFrequency { get; set; }
+    public NotificationFrequency NotificationFrequency { get; set; }
     public bool Approved { get; set; }
 
     public List<AgreementUsers> AgreementUsers { get; set; }

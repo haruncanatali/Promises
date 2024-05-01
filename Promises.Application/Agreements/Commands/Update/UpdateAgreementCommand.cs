@@ -19,7 +19,7 @@ public class UpdateAgreementCommand : IRequest<BaseResponseModel<Unit>>
     public bool HasNotification { get; set; }
     public bool HasMailNotification { get; set; }
     public long UserId { get; set; }
-    public int NotificationFrequency { get; set; }
+    public NotificationFrequency NotificationFrequency { get; set; }
     public List<long>? EventPhotosToBeDeleted { get; set; }
     public List<IFormFile>? EventPhotosToBeAdded { get; set; }
     
