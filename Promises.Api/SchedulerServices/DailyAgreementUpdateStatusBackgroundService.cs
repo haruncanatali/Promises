@@ -1,26 +1,27 @@
 using MediatR;
+using Promises.Application.Agreements.Commands.UpdateAgreementStatus;
 using Quartz;
 
 namespace Promises.Api.SchedulerServices;
 
-public class AgreementNotificationBackgroundService : IJob
+public class DailyAgreementUpdateStatusBackgroundService : IJob
 {
     private readonly IServiceScopeFactory _serviceScopeFactory;
 
-    public AgreementNotificationBackgroundService(IServiceScopeFactory serviceScopeFactory)
+    public DailyAgreementUpdateStatusBackgroundService(IServiceScopeFactory serviceScopeFactory)
     {
         _serviceScopeFactory = serviceScopeFactory;
     }
-    
+
     public async Task Execute(IJobExecutionContext context)
     {
-        await GetAgreementNotifications();
+        await DailyAgreementUpdateStatus();
     }
 
-    private async Task GetAgreementNotifications()
+    public async Task DailyAgreementUpdateStatus()
     {
         using var scope = _serviceScopeFactory.CreateScope();
         var mediator = scope.ServiceProvider.GetService<IMediator>();
-        //await mediator.Send(new CreateNotificationCommand());
+        await mediator.Send(new UpdateAgreementStatusCommand());
     }
 }
