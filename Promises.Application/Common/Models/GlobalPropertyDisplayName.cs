@@ -23,6 +23,7 @@ public static class GlobalPropertyDisplayName
     public static readonly string EventPhotoStr = "Söz Fotoğrafı";
 
     public static readonly string AgreementId = "Söz ID";
+    public static readonly string AgreementTitle = "Söz Başlığı";
     public static readonly string AgreementDescription = "Söz Açıklaması";
     public static readonly string AgreementPriorityLevel = "Söz Önemi";
     public static readonly string AgreementDate = "Söz Tarihi";

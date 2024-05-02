@@ -9,6 +9,8 @@ public class UpdateAgreementCommandValidator : AbstractValidator<UpdateAgreement
     {
         RuleFor(c => c.Id).NotNull()
             .WithName(GlobalPropertyDisplayName.AgreementId);
+        RuleFor(c => c.Title).NotEmpty()
+            .WithName(GlobalPropertyDisplayName.AgreementTitle);
         RuleFor(c => c.Description).NotEmpty()
             .WithName(GlobalPropertyDisplayName.AgreementDescription);
         RuleFor(c => c.PriorityLevel).NotNull()

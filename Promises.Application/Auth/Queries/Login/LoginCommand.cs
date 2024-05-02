@@ -14,6 +14,7 @@ namespace Promises.Application.Auth.Queries.Login
     {
         public string Username { get; set; }
         public string Password { get; set; }
+        public string DeviceToken { get; set; }
 
         public class Handler : IRequestHandler<LoginCommand, BaseResponseModel<LoginDto>>
         {
@@ -46,6 +47,7 @@ namespace Promises.Application.Auth.Queries.Login
                         loginViewModel = await _tokenManager.GenerateToken(appUser);
                         appUser.RefreshToken = loginViewModel.RefreshToken;
                         appUser.RefreshTokenExpiredTime = loginViewModel.RefreshTokenExpireTime;
+                        appUser.DeviceToken = request.DeviceToken;
                         await _userManager.UpdateAsync(appUser);
                         return BaseResponseModel<LoginDto>.Success(data: loginViewModel,$"Kullanıcı başarıyla giriş yaptı. Kullanıcı :{request.Username}");
                     }

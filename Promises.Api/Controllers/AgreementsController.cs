@@ -13,11 +13,12 @@ public class AgreementsController : BaseController
 {
     [HttpGet]
     public async Task<ActionResult<BaseResponseModel<GetAgreementsVm>>> List([FromQuery] 
-        long? userId, DateTime? date, 
+        long? userId, DateTime? date, string? title, 
         DateTime? startDate, DateTime? endDate, bool? mine)
     {
         return Ok(await Mediator.Send(new GetAgreementsQuery
         {
+            Title = title,
             UserId = userId,
             Date = date,
             StartDate = startDate,

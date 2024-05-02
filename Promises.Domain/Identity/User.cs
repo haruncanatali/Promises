@@ -16,6 +16,7 @@ public class User : IdentityUser<long>
     
     public string RefreshToken { get; set; }
     public DateTime RefreshTokenExpiredTime { get; set; }
+    public string DeviceToken { get; set; }
 
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }

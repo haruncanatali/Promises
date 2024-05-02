@@ -13,6 +13,7 @@ namespace Promises.Application.Agreements.Commands.Update;
 public class UpdateAgreementCommand : IRequest<BaseResponseModel<Unit>>
 {
     public long Id { get; set; }
+    public string Title { get; set; }
     public string Description { get; set; }
     public PriorityLevel PriorityLevel { get; set; }
     public DateTime Date { get; set; }
@@ -42,12 +43,17 @@ public class UpdateAgreementCommand : IRequest<BaseResponseModel<Unit>>
             if (agreement == null)
                 throw new BadRequestException("Güncellenecek söz bulunamadı.");
 
+            if (DateTime.Now.Date < request.Date.Date)
+                throw new BadRequestException("Söz tarihi bugünden küçük olamaz.");
+
+            agreement.Title = request.Title;
             agreement.Description = request.Description;
             agreement.PriorityLevel = request.PriorityLevel;
             agreement.Date = request.Date;
             agreement.HasNotification = request.HasNotification;
             agreement.HasMailNotification = request.HasMailNotification;
             agreement.NotificationFrequency = request.NotificationFrequency;
+            agreement.EntityStatus = EntityStatus.Waiting;
 
             if (request.EventPhotosToBeDeleted is { Count: > 0 })
             {

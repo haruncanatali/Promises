@@ -28,6 +28,7 @@ public class GetAgreementsQueryHandler : IRequestHandler<GetAgreementsQuery, Bas
             .Include(c=>c.AgreementUsers)
             .Include(c=>c.EventPhotos)
             .Where(c =>
+                (request.Title == null || c.Title.ToLower().Contains(request.Title.ToLower())) &&
                 (request.Date == null || c.Date.Date == request.Date.Value.Date) &&
                 (request.StartDate == null || c.Date.Date >= request.StartDate.Value.Date) &&
                 (request.EndDate == null || c.Date.Date <= request.EndDate.Value.Date) &&

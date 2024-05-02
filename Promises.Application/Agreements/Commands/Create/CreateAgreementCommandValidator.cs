@@ -7,6 +7,8 @@ public class CreateAgreementCommandValidator : AbstractValidator<CreateAgreement
 {
     public CreateAgreementCommandValidator()
     {
+        RuleFor(c => c.Title).NotEmpty()
+            .WithName(GlobalPropertyDisplayName.AgreementTitle);
         RuleFor(c => c.Description).NotEmpty()
             .WithName(GlobalPropertyDisplayName.AgreementDescription);
         RuleFor(c => c.PriorityLevel).NotNull()

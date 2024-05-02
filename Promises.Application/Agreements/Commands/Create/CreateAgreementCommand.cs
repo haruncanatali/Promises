@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Promises.Application.Common.Exceptions;
 using Promises.Application.Common.Interfaces;
 using Promises.Application.Common.Managers;
 using Promises.Application.Common.Models;
@@ -11,6 +12,7 @@ namespace Promises.Application.Agreements.Commands.Create;
 
 public class CreateAgreementCommand : IRequest<BaseResponseModel<Unit>>
 {
+    public string Title { get; set; }
     public string Description { get; set; }
     public PriorityLevel PriorityLevel { get; set; }
     public DateTime Date { get; set; }
@@ -36,15 +38,20 @@ public class CreateAgreementCommand : IRequest<BaseResponseModel<Unit>>
 
         public async Task<BaseResponseModel<Unit>> Handle(CreateAgreementCommand request, CancellationToken cancellationToken)
         {
+            if (DateTime.Now.Date < request.Date.Date)
+                throw new BadRequestException("Söz tarihi bugünden küçük olamaz.");
+
             EntityEntry<Agreement> result = await _context.Agreements.AddAsync(new Agreement
             {
+                Title = request.Title,
                 Description = request.Description,
                 PriorityLevel = request.PriorityLevel,
                 Date = request.Date,
                 HasMailNotification = request.HasMailNotification,
                 HasNotification = request.HasNotification,
                 NotificationFrequency = request.HasNotification ? request.NotificationFrequency : 0,
-                Approved = request.Approved
+                Approved = request.Approved,
+                EntityStatus = EntityStatus.Waiting
             }, cancellationToken);
 
             await _context.SaveChangesAsync(cancellationToken);
