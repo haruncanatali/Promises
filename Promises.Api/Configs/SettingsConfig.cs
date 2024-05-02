@@ -18,6 +18,7 @@ public static class SettingsConfig
         services.Configure<TokenSetting>(configuration.GetSection("TokenSetting"));
         services.Configure<MailSettings>(configuration.GetSection("MailSettings"));
         services.Configure<MigrationCodes>(configuration.GetSection("MigrationCodes"));
+        services.Configure<FireFileConfigs>(configuration.GetSection("FireFileConfigs"));
         services.AddTransient<TokenManager>();
         services.AddTransient<FileManager>();
         return services;

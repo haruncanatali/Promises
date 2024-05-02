@@ -8,6 +8,7 @@ using Google.Apis.Auth.OAuth2;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Promises.Application.Common.Interfaces;
 using Promises.Application.Common.Models;
 using Promises.Domain.Enums;
@@ -22,11 +23,13 @@ namespace Promises.Application.Notifications.Commands.CommonTimeNotification
         {
             private readonly IApplicationContext _context;
             private readonly IHostingEnvironment _hostingEnvironment;
+            private readonly FireFileConfigs _fileConfigs;
 
-            public Handler(IApplicationContext context, IHostingEnvironment hostingEnvironment)
+            public Handler(IApplicationContext context, IHostingEnvironment hostingEnvironment, IOptions<FireFileConfigs> options)
             {
                 _context = context;
                 _hostingEnvironment = hostingEnvironment;
+                _fileConfigs = options.Value;
             }
 
             public async Task<BaseResponseModel<Unit>> Handle(CommonTimeNotificationCommand request, CancellationToken cancellationToken)
@@ -81,7 +84,7 @@ namespace Promises.Application.Notifications.Commands.CommonTimeNotification
                     FirebaseApp.Create(new AppOptions
                     {
                         Credential =
-                            GoogleCredential.FromFile(Path.Combine(_hostingEnvironment.ContentRootPath, "wwwroot", "CloudSettings", "promises-app-fdc62-firebase-adminsdk-6rs4q-6959bef4e3.json"))
+                            GoogleCredential.FromFile(Path.Combine(_hostingEnvironment.ContentRootPath, _fileConfigs.Parent, _fileConfigs.Directory, _fileConfigs.File))
                     });
 
                     domMessageModels.ForEach(async c =>
