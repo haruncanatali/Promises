@@ -12,6 +12,7 @@ public interface IApplicationContext
     public DbSet<Agreement> Agreements { get; set; }
     public DbSet<EventPhoto> EventPhotos { get; set; }
     public DbSet<AgreementUsers> AgreementUsers { get; set; }
+    public DbSet<Friend> Friends { get; set; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

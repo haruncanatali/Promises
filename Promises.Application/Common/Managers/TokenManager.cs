@@ -31,6 +31,7 @@ public class TokenManager
         {
             new Claim(ClaimTypes.NameIdentifier, appUser.Id.ToString()),
             new Claim(ClaimTypes.Name, appUser.UserName),
+            new Claim(ClaimTypes.GivenName, appUser.FullName)
         };
         string responseRole = (await _userManager.GetRolesAsync(appUser)).FirstOrDefault();
         if (!string.IsNullOrEmpty(responseRole))

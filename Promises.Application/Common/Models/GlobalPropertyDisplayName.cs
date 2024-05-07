@@ -32,4 +32,9 @@ public static class GlobalPropertyDisplayName
     public static readonly string AgreementNotificationFrequency = "Söz İçin Bildirim Sıklığı";
     public static readonly string AgreementApproved = "Söz Onayı";
 
+    public static readonly string FriendReceiverId = "İstek Gönderilen Kişi";
+    public static readonly string FriendUserId = "İstek Yollayan Kişi";
+    public static readonly string FriendApprovedState = "Arkadaşlık İstek Yanıtı";
+    public static readonly string FriendId = "Arkadaşlık İsteği";
+
 }
