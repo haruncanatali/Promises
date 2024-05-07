@@ -3,6 +3,7 @@ using FirebaseAdmin.Messaging;
 using Google.Apis.Auth.OAuth2;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Options;
 using Promises.Application.Common.Models;
 
 namespace Promises.Application.Notifications.Commands.FriendRequestNotification;
@@ -17,10 +18,10 @@ public class FriendRequestNotificationCommand : IRequest<BaseResponseModel<Unit>
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly FireFileConfigs _fileConfigs;
 
-        public Handler(IHostingEnvironment hostingEnvironment, FireFileConfigs fileConfigs)
+        public Handler(IHostingEnvironment hostingEnvironment, IOptions<FireFileConfigs> fileConfigs)
         {
             _hostingEnvironment = hostingEnvironment;
-            _fileConfigs = fileConfigs;
+            _fileConfigs = fileConfigs.Value;
         }
 
         public async Task<BaseResponseModel<Unit>> Handle(FriendRequestNotificationCommand request, CancellationToken cancellationToken)
