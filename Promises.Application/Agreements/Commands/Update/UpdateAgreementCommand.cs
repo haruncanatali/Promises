@@ -27,12 +27,14 @@ public class UpdateAgreementCommand : IRequest<BaseResponseModel<Unit>>
     public class Handler : IRequestHandler<UpdateAgreementCommand, BaseResponseModel<Unit>>
     {
         private readonly IApplicationContext _context;
+        private readonly ICurrentUserService _currentUserService;
         private readonly FileManager _fileManager;
 
-        public Handler(IApplicationContext context, FileManager fileManager)
+        public Handler(IApplicationContext context, FileManager fileManager, ICurrentUserService currentUserService)
         {
             _context = context;
             _fileManager = fileManager;
+            _currentUserService = currentUserService;
         }
 
         public async Task<BaseResponseModel<Unit>> Handle(UpdateAgreementCommand request, CancellationToken cancellationToken)
@@ -45,6 +47,14 @@ public class UpdateAgreementCommand : IRequest<BaseResponseModel<Unit>>
 
             if (DateTime.Now.Date < request.Date.Date)
                 throw new BadRequestException("Söz tarihi bugünden küçük olamaz.");
+
+            var blockedIds = await _context.BlockedFriends
+                .Where(c => (c.ReceiverId == _currentUserService.UserId || c.SenderId == _currentUserService.UserId))
+                .Select(c => c.ReceiverId == _currentUserService.UserId ? c.SenderId : c.ReceiverId)
+                .ToListAsync(cancellationToken);
+
+            if (blockedIds.Contains(request.UserId))
+                throw new BadRequestException("Bu kişi ile arkadaş olmanız engellenmiştir.");
 
             agreement.Title = request.Title;
             agreement.Description = request.Description;

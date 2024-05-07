@@ -27,6 +27,8 @@ namespace Promises.Persistence
         public DbSet<AgreementUsers> AgreementUsers { get; set; }
         public DbSet<Friend> Friends { get; set; }
 
+        public DbSet<BlockedFriends> BlockedFriends { get; set; }
+
         #endregion
 
         #region Identity User Tables

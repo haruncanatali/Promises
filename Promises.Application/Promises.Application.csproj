@@ -30,8 +30,4 @@
       <ProjectReference Include="..\Promises.Domain\Promises.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Friends\Queries\" />
-    </ItemGroup>
-
 </Project>

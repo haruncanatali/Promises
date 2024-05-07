@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Promises.Application.Common.Exceptions;
 using Promises.Application.Common.Interfaces;
@@ -40,6 +41,14 @@ public class CreateAgreementCommand : IRequest<BaseResponseModel<Unit>>
         {
             if (DateTime.Now.Date < request.Date.Date)
                 throw new BadRequestException("Söz tarihi bugünden küçük olamaz.");
+
+            var blockedIds = await _context.BlockedFriends
+                .Where(c => (c.ReceiverId == _currentUserService.UserId || c.SenderId == _currentUserService.UserId))
+                .Select(c => c.ReceiverId == _currentUserService.UserId ? c.SenderId : c.ReceiverId)
+                .ToListAsync(cancellationToken);
+
+            if (blockedIds.Contains(request.UserId))
+                throw new BadRequestException("Bu kişi ile arkadaş olmanız engellenmiştir.");
 
             EntityEntry<Agreement> result = await _context.Agreements.AddAsync(new Agreement
             {

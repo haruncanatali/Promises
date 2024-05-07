@@ -34,6 +34,14 @@ public class CreateFriendCommand : IRequest<BaseResponseModel<Unit>>
             if (receiver == null)
                 throw new BadRequestException("Eklenecek arkadaş sistemde bulunamadı.");
 
+            var blockedIds = await _context.BlockedFriends
+                .Where(c => (c.ReceiverId == _currentUserService.UserId || c.SenderId == _currentUserService.UserId))
+                .Select(c => c.ReceiverId == _currentUserService.UserId ? c.SenderId : c.ReceiverId)
+                .ToListAsync(cancellationToken);
+
+            if (blockedIds.Contains(request.ReceiverId))
+                throw new BadRequestException("Bu kişi ile arkadaş olmanız engellenmiştir.");
+
             await _context.Friends.AddAsync(new Friend
             {
                 SenderId = _currentUserService.UserId,

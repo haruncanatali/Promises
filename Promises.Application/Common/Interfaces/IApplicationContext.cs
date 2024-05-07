@@ -13,6 +13,7 @@ public interface IApplicationContext
     public DbSet<EventPhoto> EventPhotos { get; set; }
     public DbSet<AgreementUsers> AgreementUsers { get; set; }
     public DbSet<Friend> Friends { get; set; }
+    public DbSet<BlockedFriends> BlockedFriends { get; set; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }
