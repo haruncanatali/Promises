@@ -1,1 +1,1 @@
-Notifications - Clean Arch. - Mediator - CQRS
+Notifications - Clean A. - Mediator - CQRS
